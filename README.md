@@ -109,5 +109,5 @@ end
 ## TODO
 
 - [x] Porting the itamae repository
-- [ ] Extract only the part where the error occurs
+- [x] Extract only the part where the error occurs
 - [ ] Minimal repro code

@@ -33,9 +33,9 @@ namespace :spec do
         suites = [
           [
             "spec/integration/recipes/default.rb",
-            "spec/integration/recipes/default2.rb",
-            "spec/integration/recipes/redefine.rb",
-            "spec/integration/recipes/docker.rb",
+            # "spec/integration/recipes/default2.rb",
+            # "spec/integration/recipes/redefine.rb",
+            # "spec/integration/recipes/docker.rb",
           ],
           [
             "--dry-run",

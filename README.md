@@ -60,12 +60,48 @@ This is the code where I think the problem is occurring.
 
 <summary>The code where the error occurs</summary>
 
-https://github.com/itamae-kitchen/itamae/blob/57dfb50d93c836e77911bf3a592be8bd56ec21ba/spec/integration/recipes/default.rb#L458-L465
+### The code where the error occurs
 
-https://github.com/itamae-kitchen/itamae/blob/57dfb50d93c836e77911bf3a592be8bd56ec21ba/spec/integration/recipes/default.rb#L498-L502
+[itamae/spec/integration/recipes/default.rb#L458-L465](https://github.com/itamae-kitchen/itamae/blob/57dfb50d93c836e77911bf3a592be8bd56ec21ba/spec/integration/recipes/default.rb#L458-L465)
 
-https://github.com/itamae-kitchen/itamae/blob/57dfb50d93c836e77911bf3a592be8bd56ec21ba/spec/integration/default_spec.rb#L275-L277
+```ruby:itamae/spec/integration/recipes/default.rb
+execute "f=/tmp/file_edit_with_content_change_updates_timestamp && echo 'Hello, world' > $f && touch -d 2016-05-02T01:23:45Z $f"
 
-https://github.com/itamae-kitchen/itamae/blob/57dfb50d93c836e77911bf3a592be8bd56ec21ba/spec/integration/default_spec.rb#L307-L309
+file "/tmp/file_edit_with_content_change_updates_timestamp" do
+  action :edit
+  block do |content|
+    content.gsub!('world', 'Itamae')
+  end
+end
+```
+
+[itamae/spec/integration/recipes/default.rb#L498-L502](https://github.com/itamae-kitchen/itamae/blob/57dfb50d93c836e77911bf3a592be8bd56ec21ba/spec/integration/recipes/default.rb#L498-L502)
+
+```ruby:itamae/spec/integration/recipes/default.rb
+execute "f=/tmp/file_edit_with_content_change_updates_timestamp && echo 'Hello, world' > $f && touch -d 2016-05-02T01:23:45Z $f"
+
+file "/tmp/file_edit_with_content_change_updates_timestamp" do
+  action :edit
+  block do |content|
+    content.gsub!('world', 'Itamae')
+  end
+end
+```
+
+[itamae/spec/integration/default_spec.ruby#L275-L277](https://github.com/itamae-kitchen/itamae/blob/57dfb50d93c836e77911bf3a592be8bd56ec21ba/spec/integration/default_spec.rb#L275-L277)
+
+```ruby:itamae/spec/integration/default_spec.ruby
+describe file('/tmp/file_edit_with_content_change_updates_timestamp') do
+  its(:mtime) { should be > DateTime.iso8601("2016-05-02T01:23:45Z") }
+end
+```
+
+[itamae/spec/integration/default_spec.ruby#L307-L309](https://github.com/itamae-kitchen/itamae/blob/57dfb50d93c836e77911bf3a592be8bd56ec21ba/spec/integration/default_spec.rb#L307-L309)
+
+```ruby:itamae/spec/integration/default_spec.ruby
+describe file('/tmp/file_with_content_change_updates_timestamp') do
+  its(:mtime) { should be > DateTime.iso8601("2016-05-01T01:23:45Z") }
+end
+```
 
 </details>

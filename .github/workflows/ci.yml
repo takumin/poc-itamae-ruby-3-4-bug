@@ -21,8 +21,7 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
-    - run: bundle install
     - run: bundle config set bin '.bin'
     - run: bundle config set path '.bundle'
-    - run: bundle binstubs itamae --path=.bin
+    - run: bundle install
     - run: bundle exec rake
